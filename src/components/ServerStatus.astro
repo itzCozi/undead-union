@@ -1,0 +1,158 @@
+<div id="server-status" class="bg-zinc-800 rounded-lg p-6 shadow-lg border border-zinc-700 max-w-sm mx-auto">
+  <div>
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center">
+        <div id="status-icon" class="w-6 h-6 mr-3">
+          <!-- Status icon will be updated by JavaScript -->
+          <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h2 class="text-xl font-bold">Server Status</h2>
+      </div>
+      <p id="status-text" class="font-semibold text-zinc-400">Checking...</p>
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="space-y-2">
+        <p><span class="text-zinc-400">Region:</span> <span id="region">NA-East</span></p>
+        <p><span class="text-zinc-400">IP:</span> <span id="server-ip" class="cursor-pointer hover:text-blue-400 transition-colors" title="Click to copy">51.222.82.124</span></p>
+        <p><span class="text-zinc-400">Port:</span> <span id="server-port" class="cursor-pointer hover:text-blue-400 transition-colors" title="Click to copy">28135</span></p>
+      </div>
+      <div class="space-y-2">
+        <p><span class="text-zinc-400">Ping:</span> <span id="ping">--ms</span></p>
+        <p><span class="text-zinc-400">Online:</span> <span id="player-count">--</span></p>
+        <p><span class="text-zinc-400">Max:</span> <span id="max-players">--</span></p>
+      </div>
+    </div>
+    <div class="mt-4 pt-4 border-t border-zinc-700">
+      <div class="flex flex-wrap gap-2 justify-center">
+        <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">PVE</span>
+        <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">24/7</span>
+        <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full font-medium">MODDED</span>
+        <span class="bg-yellow-600 text-white text-xs px-2 py-1 rounded-full font-medium">SMP</span>
+        <span class="bg-pink-600 text-white text-xs px-2 py-1 rounded-full font-medium">FRIENDLY</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  interface ServerStatus {
+    online: boolean;
+    playerCount: number;
+    maxPlayers: number;
+    ping: number;
+    version: string;
+    modded: boolean;
+    region: string;
+  }
+
+  interface ApiResponse {
+    success: boolean;
+    data?: ServerStatus;
+    error?: string;
+    timestamp: string;
+  }
+
+  function updateStatusDisplay(status: ServerStatus) {
+    const statusIcon = document.getElementById('status-icon');
+    const statusText = document.getElementById('status-text');
+    
+    if (status.online) {
+      statusIcon!.innerHTML = `
+        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l5 5L20 7"/>
+        </svg>
+      `;
+      statusText!.textContent = 'Online';
+      statusText!.className = 'font-semibold text-green-400';
+    } else {
+      statusIcon!.innerHTML = `
+        <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      `;
+      statusText!.textContent = 'Offline';
+      statusText!.className = 'font-semibold text-red-400';
+    }
+
+    document.getElementById('region')!.textContent = status.region;
+    document.getElementById('ping')!.textContent = status.online ? `${status.ping}ms` : '--ms';
+    document.getElementById('player-count')!.textContent = status.online ? status.playerCount.toString() : '--';
+    document.getElementById('max-players')!.textContent = status.online ? status.maxPlayers.toString() : '--';
+  }
+
+  function showError() {
+    const statusIcon = document.getElementById('status-icon');
+    const statusText = document.getElementById('status-text');
+    
+    statusIcon!.innerHTML = `
+      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+      </svg>
+    `;
+    statusText!.textContent = 'Error';
+    statusText!.className = 'font-semibold text-yellow-400';
+  }
+
+  async function fetchServerStatus() {
+    try {
+      const response = await fetch('/api/server-status.json');
+      const data: ApiResponse = await response.json();
+      
+      if (data.success && data.data) {
+        updateStatusDisplay(data.data);
+      } else {
+        showError();
+        console.error('Server status error:', data.error);
+      }
+    } catch (error) {
+      showError();
+      console.error('Failed to fetch server status:', error);
+    }
+  }
+
+  fetchServerStatus();
+
+  setInterval(fetchServerStatus, 30000);
+
+  // Add click handlers for copying IP and port to clipboard
+  function setupCopyHandlers() {
+    const serverIP = document.getElementById('server-ip');
+    const serverPort = document.getElementById('server-port');
+
+    if (serverIP) {
+      serverIP.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(serverIP.textContent || '');
+          // Visual feedback
+          const originalText = serverIP.textContent;
+          serverIP.textContent = 'Copied!';
+          setTimeout(() => {
+            serverIP.textContent = originalText;
+          }, 1000);
+        } catch (err) {
+          console.error('Failed to copy IP: ', err);
+        }
+      });
+    }
+
+    if (serverPort) {
+      serverPort.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(serverPort.textContent || '');
+          const originalText = serverPort.textContent;
+          serverPort.textContent = 'Copied!';
+          setTimeout(() => {
+            serverPort.textContent = originalText;
+          }, 1000);
+        } catch (err) {
+          console.error('Failed to copy port: ', err);
+        }
+      });
+    }
+  }
+
+  // Initialize copy handlers when the page loads
+  setupCopyHandlers();
+</script>

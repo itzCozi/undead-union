@@ -7,12 +7,14 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write .",
+    "format": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
     "check": "astro check && tsc --noEmit"
   },
   "dependencies": {
     "astro": "^5.13.5",
     "astro-seo": "^0.8.4",
+    "gamedig": "^5.3.1",
     "lucide-astro": "^0.542.0"
   },
   "devDependencies": {
@@ -20,9 +22,10 @@
     "@astrojs/sitemap": "^3.5.1",
     "@astrojs/tailwind": "^6.0.2",
     "@astrojs/ts-plugin": "^1.10.4",
+    "@types/gamedig": "^5.0.3",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
-    "tailwindcss": "^4.1.12",
+    "tailwindcss": "^3.4.0",
     "typescript": "^5.9.2"
   }
 }
