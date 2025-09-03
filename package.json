@@ -1,14 +1,28 @@
 {
-  "name": "cyan-comet",
+  "name": "undead-union",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "prettier --write .",
+    "check": "astro check && tsc --noEmit"
   },
   "dependencies": {
-    "astro": "^5.13.5"
+    "astro": "^5.13.5",
+    "astro-seo": "^0.8.4",
+    "lucide-astro": "^0.542.0"
+  },
+  "devDependencies": {
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.5.1",
+    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/ts-plugin": "^1.10.4",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5.9.2"
   }
 }

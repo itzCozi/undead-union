@@ -1,0 +1,100 @@
+---
+import { Users, Server, Map, Clock, Activity, Skull, MessageSquare } from 'lucide-astro';
+---
+
+<div class="mx-auto max-w-3xl py-12">
+  <header class="mb-8 text-center">
+    <h1 class="text-5xl font-bold mb-4">Undead Union</h1>
+    <p class="text-xl max-w-2xl text-center mx-auto text-zinc-300">
+      Welcome to the official website for the Undead Union Project Zomboid server. 
+      Survive, build, and join our thriving community in the zombie apocalypse.
+    </p>
+  </header>
+
+  <section class="mb-8">
+    <div class="bg-zinc-800 rounded-lg p-6 shadow-lg border border-zinc-700 max-w-sm mx-auto">
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <Server class="w-6 h-6 text-green-500 mr-3" />
+            <h2 class="text-xl font-bold">Server Status</h2>
+          </div>
+          <p class="font-semibold text-zinc-400">Online</p>
+        </div>
+				<div class="flex items-center justify-between">
+          <div class="space-y-2">
+            <p><span class="text-zinc-400">Region:</span> NA-East</p>
+            <p><span class="text-zinc-400">IP:</span> 51.222.82.124</p>
+            <p><span class="text-zinc-400">Port:</span> 28135</p>
+          </div>
+				  <div class="space-y-2">
+            <p><span class="text-zinc-400">Online:</span> 8</p>
+            <p><span class="text-zinc-400">In Discord:</span> 24</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Server Features -->
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold mb-6 text-center">Server Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="flex">
+        <div class="mr-4">
+          <Clock class="w-8 h-8 text-purple-500" />
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Real-time Day/Night Cycle</h3>
+          <p class="text-zinc-300">Experience a realistic zombie apocalypse with our dynamic day and night cycle that affects zombie behavior and visibility.</p>
+        </div>
+      </div>
+      
+      <div class="flex">
+        <div class="mr-4">
+          <Activity class="w-8 h-8 text-blue-500" />
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Custom Economy System</h3>
+          <p class="text-zinc-300">Trade with other survivors using our balanced in-game currency system with multiple trading outposts.</p>
+        </div>
+      </div>
+      
+      <div class="flex">
+        <div class="mr-4">
+          <Skull class="w-8 h-8 text-red-500" />
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Dynamic Hordes</h3>
+          <p class="text-zinc-300">Unique horde mechanics that create emergent gameplay experiences as zombies migrate and respond to player activity.</p>
+        </div>
+      </div>
+      
+      <div class="flex">
+        <div class="mr-4">
+          <MessageSquare class="w-8 h-8 text-green-500" />
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Active Community</h3>
+          <p class="text-zinc-300">Join our Discord for server announcements, find teammates, and participate in regular events and contests.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="text-center bg-zinc-800 rounded-lg p-8 shadow-lg border border-zinc-700">
+    <h2 class="text-3xl font-bold mb-4">Ready to Survive?</h2>
+    <p class="text-zinc-300 max-w-2xl mx-auto mb-6">
+      Join Undead Union today and test your survival skills in our carefully crafted zombie apocalypse.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+        Connect to Server
+      </a>
+      <a href="#" class="bg-zinc-700 hover:bg-zinc-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+        Join Discord
+      </a>
+    </div>
+  </section>
+</div>
