@@ -68,7 +68,7 @@ export async function queryServerStatus(host: string, port: number): Promise<Ser
       if (ping > 0 && ping < 1000) {
         return {
           online: true,
-          playerCount: Math.floor(Math.random() * 12) + 1,
+          playerCount: 0,
           maxPlayers: 8,
           ping: ping,
           version: 'Unknown',
